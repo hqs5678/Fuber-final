@@ -39,7 +39,7 @@ public class SplashViewController: UIViewController {
     view.addSubview(animatedULogoView)
     animatedULogoView.layer.position = view.layer.position
     
-    tileGridView.startAnimating()
+//    tileGridView.startAnimating()
     animatedULogoView.startAnimating()
     
   }

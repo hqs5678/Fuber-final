@@ -22,6 +22,12 @@
 
 #import <UIKit/UIKit.h>
 
+
+// 这里屏蔽之后仍能后运行
+// FOUNDATION_EXPORT  作用   定义常量
+
+
+
 //! Project version number for Commons.
 FOUNDATION_EXPORT double CommonsVersionNumber;
 

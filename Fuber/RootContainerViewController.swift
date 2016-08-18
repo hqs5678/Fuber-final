@@ -61,9 +61,9 @@ class RootContainerViewController: UIViewController {
         showSplashViewControllerNoPing()
         
         // 延时一段时间后显示主界面
-        delay(60.00) {
-            self.showMenuNavigationViewController()
-        }
+//        delay(60.00) {
+//            self.showMenuNavigationViewController()
+//        }
     }
     
     /// Displays the MapViewController

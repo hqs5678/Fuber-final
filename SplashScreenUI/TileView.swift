@@ -49,6 +49,7 @@ class TileView: UIView {
     }
     
     func startAnimatingWithDuration(duration: NSTimeInterval, beginTime: NSTimeInterval,    rippleDelay: NSTimeInterval, rippleOffset: CGPoint) {
+        
         let timingFunction = CAMediaTimingFunction(controlPoints: 0.25, 0, 0.2, 1)
         let linearFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
         let easeOutFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
@@ -99,6 +100,7 @@ class TileView: UIView {
         groupAnimation.animations = animations
         groupAnimation.timeOffset = kAnimationTimeOffset
         
+        // 波纹动画 group
         layer.addAnimation(groupAnimation, forKey: "ripple")
         
     }

@@ -27,7 +27,7 @@ public class AnimatedULogoView: UIView {
     
     
     // CAMediaTimingFunction
-    // 作用: 为动画设置加速度 减速度
+    // 作用: 为动画设置加速度 
     // CAMediaTimingFunction(controlPoints c1x: Float, _ c1y: Float, _ c2x: Float, _ c2y: Float)
     // 参数中有四个参数, 两个控制点, 设置控制点的位置, 来调整加速度
     // 具体效果请参考 YouXianMing/Tween-o-Matic-CN  

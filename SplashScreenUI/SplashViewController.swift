@@ -24,31 +24,33 @@ import UIKit
 import Commons
 
 public class SplashViewController: UIViewController {
-  public var pulsing: Bool = false
-  
-  let animatedULogoView: AnimatedULogoView = AnimatedULogoView(frame: CGRect(x: 0.0, y: 0.0, width: 90.0, height: 90.0))
-  var tileGridView: TileGridView!
-  
-  public init(tileViewFileName: String) {
+    public var pulsing: Bool = false
     
-    super.init(nibName: nil, bundle: nil)
-    tileGridView = TileGridView(TileFileName: tileViewFileName)
-    view.addSubview(tileGridView)
-    tileGridView.frame = view.bounds
+    // logo view  有动画
+    let animatedULogoView: AnimatedULogoView = AnimatedULogoView(frame: CGRect(x: 0.0, y: 0.0, width: 90.0, height: 90.0))
+    var tileGridView: TileGridView!
     
-    view.addSubview(animatedULogoView)
-    animatedULogoView.layer.position = view.layer.position
+    public init(tileViewFileName: String) {
+        
+        super.init(nibName: nil, bundle: nil)
+        tileGridView = TileGridView(TileFileName: tileViewFileName)
+        view.addSubview(tileGridView)
+        tileGridView.frame = view.bounds
+        
+        view.addSubview(animatedULogoView)
+        animatedULogoView.layer.position = view.layer.position
+        
+        //    tileGridView.startAnimating()
+        // 开始logo 动画
+        animatedULogoView.startAnimating()
+        
+    }
     
-//    tileGridView.startAnimating()
-    animatedULogoView.startAnimating()
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
-  }
-  
-  required public init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-  
-  public override func prefersStatusBarHidden() -> Bool {
-    return true
-  }
+    public override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
 }

@@ -24,6 +24,8 @@ import UIKit
 import QuartzCore
 import Commons
 
+
+// 瓷砖view 即北京网络的个view
 class TileView: UIView {
     
     static var chimesSplashImage: UIImage!
@@ -99,9 +101,6 @@ class TileView: UIView {
         
         layer.addAnimation(groupAnimation, forKey: "ripple")
         
-        
-        print(animations)
-        print(animations is NSMutableArray)
     }
     
     func stopAnimating() {

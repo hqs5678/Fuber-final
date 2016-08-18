@@ -60,9 +60,10 @@ class RootContainerViewController: UIViewController {
     func showSplashViewController() {
         showSplashViewControllerNoPing()
         
-        //    delay(6.00) {
-        //      self.showMenuNavigationViewController()
-        //    }
+        // 延时一段时间后显示主界面
+        delay(60.00) {
+            self.showMenuNavigationViewController()
+        }
     }
     
     /// Displays the MapViewController

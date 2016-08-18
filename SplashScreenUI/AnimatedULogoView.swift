@@ -134,11 +134,10 @@ extension AnimatedULogoView {
         boundsAnimation.fromValue = NSValue(CGRect: CGRect(x: 0.0, y: 0.0, width: radius * 2.0, height: radius * 2))
         boundsAnimation.toValue = NSValue(CGRect: CGRect(x: 0.0, y: 0.0, width: 2.0/3.0 * squareLayerLength, height: 2.0/3.0 * squareLayerLength))
         boundsAnimation.duration = kAnimationDurationDelay
-        
-        // 画圆动画结束后, 开始动画: 圆形 -> 方形 变小
         boundsAnimation.beginTime = kAnimationDuration - kAnimationDurationDelay
         boundsAnimation.timingFunction = circleLayerTimingFunction
         
+        //   圆形 -> 方形 过程中   圆角的大小
         // cornerRadius
         let cornerRadiusAnimation = CABasicAnimation(keyPath: "cornerRadius")
         cornerRadiusAnimation.beginTime = kAnimationDuration - kAnimationDurationDelay
@@ -164,7 +163,7 @@ extension AnimatedULogoView {
         let strokeEndAnimation = CAKeyframeAnimation(keyPath: "strokeEnd")
         strokeEndAnimation.timingFunction = strokeEndTimingFunction
         strokeEndAnimation.duration = kAnimationDuration - kAnimationDurationDelay
-        strokeEndAnimation.values = [0.0, 1.0]
+        strokeEndAnimation.values = [0.0, 1.0] 
         strokeEndAnimation.keyTimes = [0.0, 1.0]
         
         // transform

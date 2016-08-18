@@ -25,81 +25,82 @@ import SplashScreenUI
 import Commons
 
 class RootContainerViewController: UIViewController {
-  
-  private var rootViewController: UIViewController? = nil
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    showSplashViewController()
-  }
-  
-  /// Does not transition to any other UIViewControllers, SplashViewController only
-  func showSplashViewControllerNoPing() {
     
-    if rootViewController is SplashViewController {
-      return
+    private var rootViewController: UIViewController? = nil
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        showSplashViewController()
     }
     
-    rootViewController?.willMoveToParentViewController(nil)
-    rootViewController?.removeFromParentViewController()
-    rootViewController?.view.removeFromSuperview()
-    rootViewController?.didMoveToParentViewController(nil)
-    
-    let splashViewController = SplashViewController(tileViewFileName: "Chimes")
-    rootViewController = splashViewController
-    splashViewController.pulsing = true
-    
-    splashViewController.willMoveToParentViewController(self)
-    addChildViewController(splashViewController)
-    view.addSubview(splashViewController.view)
-    splashViewController.didMoveToParentViewController(self)
-  }
-  
-  /// Simulates an API handshake success and transitions to MapViewController
-  func showSplashViewController() {
-    showSplashViewControllerNoPing()
-    
-//    delay(6.00) {
-//      self.showMenuNavigationViewController()
-//    }
-  }
-  
-  /// Displays the MapViewController
-  func showMenuNavigationViewController() {
-    guard !(rootViewController is MenuNavigationViewController) else { return }
-    
-    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    let nav =  storyboard.instantiateViewControllerWithIdentifier("MenuNavigationController") as! UINavigationController
-    nav.willMoveToParentViewController(self)
-    addChildViewController(nav)
-
-    if let rootViewController = self.rootViewController {
-      self.rootViewController = nav
-      rootViewController.willMoveToParentViewController(nil)
-      
-      transitionFromViewController(rootViewController, toViewController: nav, duration: 0.55, options: [.TransitionCrossDissolve, .CurveEaseOut], animations: { () -> Void in
+    /// Does not transition to any other UIViewControllers, SplashViewController only
+    func showSplashViewControllerNoPing() {
         
-        }, completion: { _ in
-          nav.didMoveToParentViewController(self)
-          rootViewController.removeFromParentViewController()
-          rootViewController.didMoveToParentViewController(nil)
-      })
-    } else {
-      rootViewController = nav
-      view.addSubview(nav.view)
-      nav.didMoveToParentViewController(self)
+        if rootViewController is SplashViewController {
+            return
+        }
+        
+        // 将 rootViewController 从ParentViewController移除
+        rootViewController?.willMoveToParentViewController(nil)
+        rootViewController?.removeFromParentViewController()
+        rootViewController?.view.removeFromSuperview()
+        rootViewController?.didMoveToParentViewController(nil)
+        
+        let splashViewController = SplashViewController(tileViewFileName: "Chimes")
+        rootViewController = splashViewController
+        splashViewController.pulsing = true
+        
+        splashViewController.willMoveToParentViewController(self)
+        addChildViewController(splashViewController)
+        view.addSubview(splashViewController.view)
+        splashViewController.didMoveToParentViewController(self)
     }
-  }
-  
-  
-  override func prefersStatusBarHidden() -> Bool {
-    switch rootViewController  {
-    case is SplashViewController:
-      return true
-    case is MenuNavigationViewController:
-      return false
-    default:
-      return false
+    
+    /// Simulates an API handshake success and transitions to MapViewController
+    func showSplashViewController() {
+        showSplashViewControllerNoPing()
+        
+        //    delay(6.00) {
+        //      self.showMenuNavigationViewController()
+        //    }
     }
-  }
+    
+    /// Displays the MapViewController
+    func showMenuNavigationViewController() {
+        guard !(rootViewController is MenuNavigationViewController) else { return }
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let nav =  storyboard.instantiateViewControllerWithIdentifier("MenuNavigationController") as! UINavigationController
+        nav.willMoveToParentViewController(self)
+        addChildViewController(nav)
+        
+        if let rootViewController = self.rootViewController {
+            self.rootViewController = nav
+            rootViewController.willMoveToParentViewController(nil)
+            
+            transitionFromViewController(rootViewController, toViewController: nav, duration: 0.55, options: [.TransitionCrossDissolve, .CurveEaseOut], animations: { () -> Void in
+                
+                }, completion: { _ in
+                    nav.didMoveToParentViewController(self)
+                    rootViewController.removeFromParentViewController()
+                    rootViewController.didMoveToParentViewController(nil)
+            })
+        } else {
+            rootViewController = nav
+            view.addSubview(nav.view)
+            nav.didMoveToParentViewController(self)
+        }
+    }
+    
+    
+    override func prefersStatusBarHidden() -> Bool {
+        switch rootViewController  {
+        case is SplashViewController:
+            return true
+        case is MenuNavigationViewController:
+            return false
+        default:
+            return false
+        }
+    }
 }

@@ -24,218 +24,226 @@ import UIKit
 import QuartzCore
 import Commons
 public class AnimatedULogoView: UIView {
-  private let strokeEndTimingFunction   = CAMediaTimingFunction(controlPoints: 1.00, 0.0, 0.35, 1.0)
-  private let squareLayerTimingFunction      = CAMediaTimingFunction(controlPoints: 0.25, 0.0, 0.20, 1.0)
-  private let circleLayerTimingFunction   = CAMediaTimingFunction(controlPoints: 0.65, 0.0, 0.40, 1.0)
-  private let fadeInSquareTimingFunction = CAMediaTimingFunction(controlPoints: 0.15, 0, 0.85, 1.0)
-  
-  private let radius: CGFloat = 37.5
-  private let squareLayerLength = 21.0
-  private let startTimeOffset = 0.7 * kAnimationDuration
-  
-  private var circleLayer: CAShapeLayer!
-  private var squareLayer: CAShapeLayer!
-  private var lineLayer: CAShapeLayer!
-  private var maskLayer: CAShapeLayer!
-  
-  var beginTime: CFTimeInterval = 0
-  
-  override init(frame: CGRect) {
-    super.init(frame: frame)
     
-    circleLayer = generateCircleLayer()
-    lineLayer = generateLineLayer()
-    squareLayer = generateSquareLayer()
-    maskLayer = generateMaskLayer()
     
-    layer.mask = maskLayer
-    layer.addSublayer(circleLayer)
-    layer.addSublayer(lineLayer)
-    layer.addSublayer(squareLayer)
-  }
-  
-  public func startAnimating() {
-    beginTime = CACurrentMediaTime()
-    layer.anchorPoint = CGPointZero
+    // CAMediaTimingFunction
     
-    animateMaskLayer()
-    animateCircleLayer()
-    animateLineLayer()
-    animateSquareLayer()
-  }
-  
-  required public init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
-  }
+    
+    private let strokeEndTimingFunction   = CAMediaTimingFunction(controlPoints: 1.00, 0.0, 0.35, 1.0)
+    private let squareLayerTimingFunction = CAMediaTimingFunction(controlPoints: 0.25, 0.0, 0.20, 1.0)
+    private let circleLayerTimingFunction = CAMediaTimingFunction(controlPoints: 0.65, 0.0, 0.40, 1.0)
+    private let fadeInSquareTimingFunction = CAMediaTimingFunction(controlPoints: 0.15, 0, 0.85, 1.0)
+    
+    private let radius: CGFloat = 37.5
+    private let squareLayerLength = 21.0
+    private let startTimeOffset = 0.7 * kAnimationDuration
+    
+    private var circleLayer: CAShapeLayer!
+    private var squareLayer: CAShapeLayer!
+    private var lineLayer: CAShapeLayer!
+    private var maskLayer: CAShapeLayer!
+    
+    var beginTime: CFTimeInterval = 0
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        circleLayer = generateCircleLayer()
+        lineLayer = generateLineLayer()
+        squareLayer = generateSquareLayer()
+        maskLayer = generateMaskLayer()
+        
+        layer.mask = maskLayer
+        layer.addSublayer(circleLayer)
+        layer.addSublayer(lineLayer)
+        layer.addSublayer(squareLayer)
+    }
+    
+    public func startAnimating() {
+        beginTime = CACurrentMediaTime()
+        layer.anchorPoint = CGPointZero
+        
+        animateMaskLayer()
+        animateCircleLayer()
+        animateLineLayer()
+        animateSquareLayer()
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
 }
 
 extension AnimatedULogoView {
-  
-  private func generateMaskLayer()->CAShapeLayer {
-    let layer = CAShapeLayer()
-    layer.frame = CGRect(x: -radius, y: -radius, width: radius * 2.0, height: radius * 2.0)
-    layer.allowsGroupOpacity = true
-    layer.backgroundColor = UIColor.whiteColor().CGColor
-    return layer
-  }
-  
-  private func generateCircleLayer()->CAShapeLayer {
-    let layer = CAShapeLayer()
-    layer.lineWidth = radius
-    layer.path = UIBezierPath(arcCenter: CGPointZero, radius: radius/2, startAngle: -CGFloat(M_PI_2), endAngle: CGFloat(3*M_PI_2), clockwise: true).CGPath
-    layer.strokeColor = UIColor.whiteColor().CGColor
-    layer.fillColor = UIColor.clearColor().CGColor
-    return layer
-  }
-  
-  private func generateLineLayer()->CAShapeLayer {
-    let layer = CAShapeLayer()
-    layer.position = CGPointZero
-    layer.frame = CGRectZero
-    layer.allowsGroupOpacity = true
-    layer.lineWidth = 5.0
-    layer.strokeColor = UIColor.fuberBlue().CGColor
     
-    let bezierPath = UIBezierPath()
-    bezierPath.moveToPoint(CGPointZero)
-    bezierPath.addLineToPoint(CGPointMake(0.0, -radius))
+    private func generateMaskLayer()->CAShapeLayer {
+        let layer = CAShapeLayer()
+        layer.frame = CGRect(x: -radius, y: -radius, width: radius * 2.0, height: radius * 2.0)
+        layer.allowsGroupOpacity = true
+        layer.backgroundColor = UIColor.whiteColor().CGColor
+        return layer
+    }
     
-    layer.path = bezierPath.CGPath
-    return layer
-  }
-  
-  private func generateSquareLayer()->CAShapeLayer {
-    let layer = CAShapeLayer()
-    layer.position = CGPointZero
-    layer.frame = CGRect(x: -squareLayerLength / 2.0, y: -squareLayerLength / 2.0, width: squareLayerLength, height: squareLayerLength)
-    layer.cornerRadius = 1.5
-    layer.allowsGroupOpacity = true
-    layer.backgroundColor = UIColor.fuberBlue().CGColor
+    private func generateCircleLayer()->CAShapeLayer {
+        let layer = CAShapeLayer()
+        layer.lineWidth = radius
+        layer.path = UIBezierPath(arcCenter: CGPointZero, radius: radius/2, startAngle: -CGFloat(M_PI_2), endAngle: CGFloat(3*M_PI_2), clockwise: true).CGPath
+        layer.strokeColor = UIColor.whiteColor().CGColor
+        layer.fillColor = UIColor.clearColor().CGColor
+        return layer
+    }
     
-    return layer
-  }
+    private func generateLineLayer()->CAShapeLayer {
+        let layer = CAShapeLayer()
+        layer.position = CGPointZero
+        layer.frame = CGRectZero
+        layer.allowsGroupOpacity = true
+        layer.lineWidth = 5.0
+        layer.strokeColor = UIColor.fuberBlue().CGColor
+        
+        let bezierPath = UIBezierPath()
+        bezierPath.moveToPoint(CGPointZero)
+        bezierPath.addLineToPoint(CGPointMake(0.0, -radius))
+        
+        layer.path = bezierPath.CGPath
+        return layer
+    }
+    
+    private func generateSquareLayer()->CAShapeLayer {
+        let layer = CAShapeLayer()
+        layer.position = CGPointZero
+        layer.frame = CGRect(x: -squareLayerLength / 2.0, y: -squareLayerLength / 2.0, width: squareLayerLength, height: squareLayerLength)
+        layer.cornerRadius = 1.5
+        layer.allowsGroupOpacity = true
+        layer.backgroundColor = UIColor.fuberBlue().CGColor
+        
+        return layer
+    }
 }
 
 extension AnimatedULogoView {
-  
-  private func animateMaskLayer() {
-    // bounds
-    let boundsAnimation = CABasicAnimation(keyPath: "bounds")
-    boundsAnimation.fromValue = NSValue(CGRect: CGRect(x: 0.0, y: 0.0, width: radius * 2.0, height: radius * 2))
-    boundsAnimation.toValue = NSValue(CGRect: CGRect(x: 0.0, y: 0.0, width: 2.0/3.0 * squareLayerLength, height: 2.0/3.0 * squareLayerLength))
-    boundsAnimation.duration = kAnimationDurationDelay
-    boundsAnimation.beginTime = kAnimationDuration - kAnimationDurationDelay
-    boundsAnimation.timingFunction = circleLayerTimingFunction
     
-    // cornerRadius
-    let cornerRadiusAnimation = CABasicAnimation(keyPath: "cornerRadius")
-    cornerRadiusAnimation.beginTime = kAnimationDuration - kAnimationDurationDelay
-    cornerRadiusAnimation.duration = kAnimationDurationDelay
-    cornerRadiusAnimation.fromValue = radius
-    cornerRadiusAnimation.toValue = 2
-    cornerRadiusAnimation.timingFunction = circleLayerTimingFunction
+    private func animateMaskLayer() {
+        // bounds
+        let boundsAnimation = CABasicAnimation(keyPath: "bounds")
+        // 动画: 从圆形 -> 方形  逐渐变小
+        boundsAnimation.fromValue = NSValue(CGRect: CGRect(x: 0.0, y: 0.0, width: radius * 2.0, height: radius * 2))
+        boundsAnimation.toValue = NSValue(CGRect: CGRect(x: 0.0, y: 0.0, width: 2.0/3.0 * squareLayerLength, height: 2.0/3.0 * squareLayerLength))
+        boundsAnimation.duration = kAnimationDurationDelay
+        
+        // 画圆动画结束后, 开始动画: 圆形 -> 方形 变小
+        boundsAnimation.beginTime = kAnimationDuration - kAnimationDurationDelay
+        boundsAnimation.timingFunction = circleLayerTimingFunction
+        
+        // cornerRadius
+        let cornerRadiusAnimation = CABasicAnimation(keyPath: "cornerRadius")
+        cornerRadiusAnimation.beginTime = kAnimationDuration - kAnimationDurationDelay
+        cornerRadiusAnimation.duration = kAnimationDurationDelay
+        cornerRadiusAnimation.fromValue = radius
+        cornerRadiusAnimation.toValue = 2
+        cornerRadiusAnimation.timingFunction = circleLayerTimingFunction
+        
+        // Group
+        let groupAnimation = CAAnimationGroup()
+        groupAnimation.removedOnCompletion = false
+        groupAnimation.fillMode = kCAFillModeBoth
+        groupAnimation.beginTime = beginTime
+        groupAnimation.repeatCount = Float.infinity
+        groupAnimation.duration = kAnimationDuration
+        groupAnimation.animations = [boundsAnimation, cornerRadiusAnimation]
+        groupAnimation.timeOffset = startTimeOffset
+        maskLayer.addAnimation(groupAnimation, forKey: "looping")
+    }
     
-    // Group
-    let groupAnimation = CAAnimationGroup()
-    groupAnimation.removedOnCompletion = false
-    groupAnimation.fillMode = kCAFillModeBoth
-    groupAnimation.beginTime = beginTime
-    groupAnimation.repeatCount = Float.infinity
-    groupAnimation.duration = kAnimationDuration
-    groupAnimation.animations = [boundsAnimation, cornerRadiusAnimation]
-    groupAnimation.timeOffset = startTimeOffset
-    maskLayer.addAnimation(groupAnimation, forKey: "looping")
-  }
-  
-  private func animateCircleLayer() {
-    // strokeEnd
-    let strokeEndAnimation = CAKeyframeAnimation(keyPath: "strokeEnd")
-    strokeEndAnimation.timingFunction = strokeEndTimingFunction
-    strokeEndAnimation.duration = kAnimationDuration - kAnimationDurationDelay
-    strokeEndAnimation.values = [0.0, 1.0]
-    strokeEndAnimation.keyTimes = [0.0, 1.0]
+    private func animateCircleLayer() {
+        // strokeEnd
+        let strokeEndAnimation = CAKeyframeAnimation(keyPath: "strokeEnd")
+        strokeEndAnimation.timingFunction = strokeEndTimingFunction
+        strokeEndAnimation.duration = kAnimationDuration - kAnimationDurationDelay
+        strokeEndAnimation.values = [0.0, 1.0]
+        strokeEndAnimation.keyTimes = [0.0, 1.0]
+        
+        // transform
+        let transformAnimation = CABasicAnimation(keyPath: "transform")
+        transformAnimation.timingFunction = strokeEndTimingFunction
+        transformAnimation.duration = kAnimationDuration - kAnimationDurationDelay
+        
+        var startingTransform = CATransform3DMakeRotation(-CGFloat(M_PI_4), 0, 0, 1)
+        startingTransform = CATransform3DScale(startingTransform, 0.25, 0.25, 1)
+        transformAnimation.fromValue = NSValue(CATransform3D:startingTransform)
+        transformAnimation.toValue = NSValue(CATransform3D: CATransform3DMakeScale(1.0, 1.0, 1.0))
+        
+        // Group
+        let groupAnimation = CAAnimationGroup()
+        groupAnimation.animations = [strokeEndAnimation, transformAnimation]
+        groupAnimation.repeatCount = Float.infinity
+        groupAnimation.duration = kAnimationDuration
+        groupAnimation.beginTime = beginTime
+        groupAnimation.timeOffset = startTimeOffset
+        
+        circleLayer.addAnimation(groupAnimation, forKey: "looping")
+    }
     
-    // transform
-    let transformAnimation = CABasicAnimation(keyPath: "transform")
-    transformAnimation.timingFunction = strokeEndTimingFunction
-    transformAnimation.duration = kAnimationDuration - kAnimationDurationDelay
+    private func animateLineLayer() {
+        // lineWidth
+        let lineWidthAnimation = CAKeyframeAnimation(keyPath: "lineWidth")
+        lineWidthAnimation.values = [0.0, 5.0, 0.0]
+        lineWidthAnimation.timingFunctions = [strokeEndTimingFunction, circleLayerTimingFunction]
+        lineWidthAnimation.duration = kAnimationDuration
+        lineWidthAnimation.keyTimes = [0.0, (kAnimationDuration - kAnimationDurationDelay) / kAnimationDuration , 1.0]
+        
+        // transform
+        let transformAnimation = CAKeyframeAnimation(keyPath: "transform")
+        transformAnimation.timingFunctions = [strokeEndTimingFunction, circleLayerTimingFunction]
+        transformAnimation.duration = kAnimationDuration
+        transformAnimation.keyTimes = [0.0, (kAnimationDuration - kAnimationDurationDelay) / kAnimationDuration , 1.0]
+        
+        var transform = CATransform3DMakeRotation(CGFloat(7.0 * M_PI_4), 0.0, 0.0, 1.0)
+        transform = CATransform3DScale(transform, 0.25, 0.25, 1.0)
+        transformAnimation.values = [NSValue(CATransform3D: transform),
+                                     NSValue(CATransform3D: CATransform3DIdentity),
+                                     NSValue(CATransform3D: CATransform3DMakeScale(0.15, 0.15, 1.0))]
+        
+        // Group
+        let groupAnimation = CAAnimationGroup()
+        groupAnimation.repeatCount = Float.infinity
+        groupAnimation.removedOnCompletion = false
+        groupAnimation.duration = kAnimationDuration
+        groupAnimation.beginTime = beginTime
+        groupAnimation.animations = [lineWidthAnimation, transformAnimation ]
+        groupAnimation.timeOffset = startTimeOffset
+        lineLayer.addAnimation(groupAnimation, forKey: "looping")
+    }
     
-    var startingTransform = CATransform3DMakeRotation(-CGFloat(M_PI_4), 0, 0, 1)
-    startingTransform = CATransform3DScale(startingTransform, 0.25, 0.25, 1)
-    transformAnimation.fromValue = NSValue(CATransform3D:startingTransform)
-    transformAnimation.toValue = NSValue(CATransform3D: CATransform3DMakeScale(1.0, 1.0, 1.0))
-    
-    // Group
-    let groupAnimation = CAAnimationGroup()
-    groupAnimation.animations = [strokeEndAnimation, transformAnimation]
-    groupAnimation.repeatCount = Float.infinity
-    groupAnimation.duration = kAnimationDuration
-    groupAnimation.beginTime = beginTime
-    groupAnimation.timeOffset = startTimeOffset
-    
-    circleLayer.addAnimation(groupAnimation, forKey: "looping")
-  }
-  
-  private func animateLineLayer() {
-    // lineWidth
-    let lineWidthAnimation = CAKeyframeAnimation(keyPath: "lineWidth")
-    lineWidthAnimation.values = [0.0, 5.0, 0.0]
-    lineWidthAnimation.timingFunctions = [strokeEndTimingFunction, circleLayerTimingFunction]
-    lineWidthAnimation.duration = kAnimationDuration
-    lineWidthAnimation.keyTimes = [0.0, (kAnimationDuration - kAnimationDurationDelay) / kAnimationDuration , 1.0]
-    
-    // transform
-    let transformAnimation = CAKeyframeAnimation(keyPath: "transform")
-    transformAnimation.timingFunctions = [strokeEndTimingFunction, circleLayerTimingFunction]
-    transformAnimation.duration = kAnimationDuration
-    transformAnimation.keyTimes = [0.0, (kAnimationDuration - kAnimationDurationDelay) / kAnimationDuration , 1.0]
-    
-    var transform = CATransform3DMakeRotation(CGFloat(7.0 * M_PI_4), 0.0, 0.0, 1.0)
-    transform = CATransform3DScale(transform, 0.25, 0.25, 1.0)
-    transformAnimation.values = [NSValue(CATransform3D: transform),
-                                 NSValue(CATransform3D: CATransform3DIdentity),
-                                 NSValue(CATransform3D: CATransform3DMakeScale(0.15, 0.15, 1.0))]
-    
-    // Group
-    let groupAnimation = CAAnimationGroup()
-    groupAnimation.repeatCount = Float.infinity
-    groupAnimation.removedOnCompletion = false
-    groupAnimation.duration = kAnimationDuration
-    groupAnimation.beginTime = beginTime
-    groupAnimation.animations = [lineWidthAnimation, transformAnimation ]
-    groupAnimation.timeOffset = startTimeOffset
-    lineLayer.addAnimation(groupAnimation, forKey: "looping")
-  }
-  
-  private func animateSquareLayer() {
-    // bounds
-    let b1 = NSValue(CGRect: CGRect(x: 0.0, y: 0.0, width: 2.0/3.0 * squareLayerLength, height: 2.0/3.0  * squareLayerLength))
-    let b2 = NSValue(CGRect: CGRect(x: 0.0, y: 0.0, width: squareLayerLength, height: squareLayerLength))
-    let b3 = NSValue(CGRect: CGRectZero)
-    
-    let boundsAnimation = CAKeyframeAnimation(keyPath: "bounds")
-    boundsAnimation.values = [b1, b2, b3]
-    boundsAnimation.timingFunctions = [fadeInSquareTimingFunction, squareLayerTimingFunction]
-    boundsAnimation.duration = kAnimationDuration
-    boundsAnimation.keyTimes = [0, (kAnimationDuration - kAnimationDurationDelay) / kAnimationDuration , 1]
-    
-    // backgroundColor
-    let backgroundColorAnimation = CABasicAnimation(keyPath: "backgroundColor")
-    backgroundColorAnimation.fromValue = UIColor.whiteColor().CGColor
-    backgroundColorAnimation.toValue = UIColor.fuberBlue().CGColor
-    backgroundColorAnimation.timingFunction = squareLayerTimingFunction
-    backgroundColorAnimation.fillMode = kCAFillModeBoth
-    backgroundColorAnimation.beginTime = kAnimationDurationDelay * 2.0 / kAnimationDuration
-    backgroundColorAnimation.duration = kAnimationDuration / (kAnimationDuration - kAnimationDurationDelay)
-    
-    // Group
-    let groupAnimation = CAAnimationGroup()
-    groupAnimation.animations = [boundsAnimation, backgroundColorAnimation]
-    groupAnimation.repeatCount = Float.infinity
-    groupAnimation.duration = kAnimationDuration
-    groupAnimation.removedOnCompletion = false
-    groupAnimation.beginTime = beginTime
-    groupAnimation.timeOffset = startTimeOffset
-    squareLayer.addAnimation(groupAnimation, forKey: "looping")
-  }
+    private func animateSquareLayer() {
+        // bounds
+        let b1 = NSValue(CGRect: CGRect(x: 0.0, y: 0.0, width: 2.0/3.0 * squareLayerLength, height: 2.0/3.0  * squareLayerLength))
+        let b2 = NSValue(CGRect: CGRect(x: 0.0, y: 0.0, width: squareLayerLength, height: squareLayerLength))
+        let b3 = NSValue(CGRect: CGRectZero)
+        
+        let boundsAnimation = CAKeyframeAnimation(keyPath: "bounds")
+        boundsAnimation.values = [b1, b2, b3]
+        boundsAnimation.timingFunctions = [fadeInSquareTimingFunction, squareLayerTimingFunction]
+        boundsAnimation.duration = kAnimationDuration
+        boundsAnimation.keyTimes = [0, (kAnimationDuration - kAnimationDurationDelay) / kAnimationDuration , 1]
+        
+        // backgroundColor
+        let backgroundColorAnimation = CABasicAnimation(keyPath: "backgroundColor")
+        backgroundColorAnimation.fromValue = UIColor.whiteColor().CGColor
+        backgroundColorAnimation.toValue = UIColor.fuberBlue().CGColor
+        backgroundColorAnimation.timingFunction = squareLayerTimingFunction
+        backgroundColorAnimation.fillMode = kCAFillModeBoth
+        backgroundColorAnimation.beginTime = kAnimationDurationDelay * 2.0 / kAnimationDuration
+        backgroundColorAnimation.duration = kAnimationDuration / (kAnimationDuration - kAnimationDurationDelay)
+        
+        // Group
+        let groupAnimation = CAAnimationGroup()
+        groupAnimation.animations = [boundsAnimation, backgroundColorAnimation]
+        groupAnimation.repeatCount = Float.infinity
+        groupAnimation.duration = kAnimationDuration
+        groupAnimation.removedOnCompletion = false
+        groupAnimation.beginTime = beginTime
+        groupAnimation.timeOffset = startTimeOffset
+        squareLayer.addAnimation(groupAnimation, forKey: "looping")
+    }
 }

@@ -22,8 +22,11 @@
 
 import Foundation
 
+
+//  动画持续时间
 /// The total animation duration of the splash animation
 let kAnimationDuration: NSTimeInterval = 3.0
+
 
 /// The length of the second part of the duration
 let kAnimationDurationDelay: NSTimeInterval = 0.5
